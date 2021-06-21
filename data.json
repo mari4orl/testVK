@@ -1,0 +1,46 @@
+{
+  "inputs": [
+    {
+    "label": "Фамилия",
+    "type": "text",
+    "id": "last_name"
+    },
+    {
+    "label": "Имя",
+    "type": "text",
+    "id": "first_name"
+    },
+    {
+    "label": "Отчество",
+    "type": "text",
+    "id": "second_name"
+    }
+  ],
+  "date": [
+    {
+    "label": "Дата рождения"
+    },
+    {
+    "type": "number",
+    "min": "1",
+    "max": "31",
+    "name": "day"
+    },
+    {
+    "type": "number",
+    "min": "1",
+    "max": "12",
+    "name": "month"
+    },
+    {
+    "type": "number",
+    "min": "1900",
+    "max": "2021",
+    "name": "year"
+    }
+  ],
+  "submit": {
+    "url": "www.example.com",
+    "text": "Отправить"
+  }
+}
