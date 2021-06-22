@@ -3,44 +3,135 @@
     {
     "label": "Фамилия",
     "type": "text",
-    "id": "last_name"
+    "id": "last_name",
+    "name": "last_name",
+    "required": "required"
     },
     {
     "label": "Имя",
     "type": "text",
-    "id": "first_name"
+    "id": "first_name",
+    "name": "first_name",
+    "required": "required"
     },
     {
     "label": "Отчество",
     "type": "text",
-    "id": "second_name"
+    "id": "second_name",
+    "name": "second_name"
+    },
+    {
+    "label": "Моб. телефон",
+    "type": "tel",
+    "id": "phone",
+    "name": "phone",
+    "required": "required"
+    },
+    {
+    "label": "Электронная почта",
+    "type": "email",
+    "id": "email",
+    "name": "email",
+    "required": "required"
     }
   ],
   "date": [
     {
-    "label": "Дата рождения"
+    "label": "Дата рождения",
+    "id": "date_of_birth"
     },
     {
     "type": "number",
     "min": "1",
     "max": "31",
-    "name": "day"
+    "name": "day",
+    "id": "date_of_birth",
+    "required": "required"
     },
     {
     "type": "number",
     "min": "1",
     "max": "12",
-    "name": "month"
+    "name": "month",
+    "id": "date_of_birth",
+    "required": "required"
     },
     {
     "type": "number",
     "min": "1900",
     "max": "2021",
-    "name": "year"
+    "name": "year",
+    "id": "date_of_birth",
+    "required": "required"
+    }
+  ],
+  "status_select": [
+    {
+    "label": "Семейное положение",
+    "id": "status",
+    "name": "status"
+    },
+    {
+    "value1": "not chosen",
+    "value2": "married",
+    "value3": "single",
+    "value4": "divorced"
+    },
+    {
+    "value1": "не выбрано",
+    "value2": "женат/замужем",
+    "value3": "холост(а)",
+    "value4": "разведен(а)"
+    }
+  ],
+  "education_select": [
+    {
+    "label": "Образование",
+    "id": "education",
+    "name": "education"
+    },
+    {
+    "value1": "not chosen",
+    "value2": "higher",
+    "value3": "secondary",
+    "value4": "specialized secondary",
+    "value5": "student"
+    },
+    {
+    "value1": "не выбрано",
+    "value2": "высшее",
+    "value3": "среднее",
+    "value4": "среднее специальное",
+    "value5": "студент"
     }
   ],
   "submit": {
     "url": "www.example.com",
+    "method": "post",
     "text": "Отправить"
-  }
+  },
+  "checkbox": [
+    {
+    "label": "Согласие, что Вы согласны",
+    "type": "checkbox",
+    "id": "agreement",
+    "name": "agreement",
+    "required": "required"
+    }
+  ],
+  "previous_surname": [
+    {
+      "label": "Прошлая фамилия",
+      "type": "text",
+      "id": "previous_surname",
+      "name": "previous_surname",
+      "required": "required"
+    },
+    {
+    "label": "ранее менялась",
+    "type": "checkbox",
+    "id": "previous_checkbox",
+    "name": "previous_checkbox"
+    }
+  ]
 }
