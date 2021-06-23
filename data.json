@@ -5,6 +5,7 @@
     "type": "text",
     "id": "last_name",
     "name": "last_name",
+    "placeholder": "Укажите Вашу фамилию *",
     "required": "required"
     },
     {
@@ -12,12 +13,14 @@
     "type": "text",
     "id": "first_name",
     "name": "first_name",
+    "placeholder": "Введите имя *",
     "required": "required"
     },
     {
     "label": "Отчество",
     "type": "text",
     "id": "second_name",
+    "placeholder": "Отчество, если есть",
     "name": "second_name"
     },
     {
@@ -25,6 +28,7 @@
     "type": "tel",
     "id": "phone",
     "name": "phone",
+    "placeholder": "+7 ХХХ ХХХ ХХ ХХ *",
     "required": "required"
     },
     {
@@ -32,6 +36,7 @@
     "type": "email",
     "id": "email",
     "name": "email",
+    "placeholder": "example@gmail.com",
     "required": "required"
     }
   ],
@@ -46,6 +51,7 @@
     "max": "31",
     "name": "day",
     "id": "date_of_birth",
+    "placeholder": "дд",
     "required": "required"
     },
     {
@@ -54,6 +60,7 @@
     "max": "12",
     "name": "month",
     "id": "date_of_birth",
+    "placeholder": "мм",
     "required": "required"
     },
     {
@@ -62,6 +69,7 @@
     "max": "2021",
     "name": "year",
     "id": "date_of_birth",
+    "placeholder": "гггг",
     "required": "required"
     }
   ],
@@ -116,6 +124,7 @@
     "type": "checkbox",
     "id": "agreement",
     "name": "agreement",
+    "value": "agree",
     "required": "required"
     }
   ],
@@ -125,11 +134,13 @@
       "type": "text",
       "id": "previous_surname",
       "name": "previous_surname",
+      "placeholder": "Введите прошлую фамилию *",
       "required": "required"
     },
     {
     "label": "ранее менялась",
     "type": "checkbox",
+    "value": "changed",
     "id": "previous_checkbox",
     "name": "previous_checkbox"
     }

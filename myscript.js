@@ -31,11 +31,11 @@ function createLabel(data, id, label) {
 
   newLabel.setAttribute('for', id);
   newLabel.textContent = label;
+
   return newLabel
 }
 
 function createInput(data, input, number, form) {
-  var fragment = document.createDocumentFragment();
   for (var i = 0; i < number; i++) {
     var inputContainer = document.createElement('div');
     inputContainer.classList.add('page__input-container');
@@ -44,8 +44,21 @@ function createInput(data, input, number, form) {
     newInput.id = input[i].id;
     newInput.name = input[i].name;
 
-    if ((input[i].name == 'previous_checkbox')||(input[i].name == 'previous_surname')) {
-      inputContainer.classList.add('page__previous-surname');
+// Создаёт дополнительное поле для прошлой фамилии
+    if (input[i].name == 'first_name') {
+      createInput(data, data.previous_surname, data.previous_surname.length, form);
+    }
+
+    if (input[i].hasOwnProperty('placeholder')) {
+      newInput.placeholder = input[i].placeholder;
+    }
+
+// Классы для дополнительных полей
+    if (input[i].name == 'previous_checkbox') {
+      inputContainer.classList.add('page__previous-checkbox');
+    }
+    if (input[i].name == 'previous_surname') {
+      inputContainer.classList.add('page__previous-input');
     }
 
     if (input[i].hasOwnProperty('required')) {
@@ -58,12 +71,31 @@ function createInput(data, input, number, form) {
       newInput.setAttribute('maxlength',"18");
     }
 
-    inputContainer.appendChild(createLabel(data, input[i].id, input[i].label));
-    inputContainer.appendChild(newInput);
-    fragment.appendChild(inputContainer);
+    newInput.classList.add('page__input');
 
+// Классы для чекбоксов прочее
+    if (input[i].type == 'checkbox') {
+      var checkboxLabel = createLabel(data, input[i].id, input[i].label);
+      checkboxLabel.classList.add('page__label-checkbox');
+      checkboxLabel.appendChild(newInput);
+
+      newInput.value = input[i].value;
+      inputContainer.classList.add('page__checkbox-container');
+      newInput.classList.add('visually-hidden');
+      newInput.classList.add('page__checkbox');
+
+      var checkboxIndicator = document.createElement('span');
+      checkboxIndicator.classList.add('page__checkbox-indicator')
+      checkboxLabel.appendChild(checkboxIndicator);
+
+      inputContainer.appendChild(checkboxLabel);
+    } else {
+      inputContainer.appendChild(createLabel(data, input[i].id, input[i].label));
+      inputContainer.appendChild(newInput);
+    }
+
+    form.appendChild(inputContainer);
   }
-    form.appendChild(fragment);
 }
 
 function createDate(data, form) {
@@ -71,6 +103,7 @@ function createDate(data, form) {
   var inputContainer = document.createElement('div');
 
   inputContainer.classList.add('page__input-container');
+  inputContainer.classList.add('page__data-container');
   inputContainer.appendChild(createLabel(data, data.date[0].id, data.date[0].label));
 
   for (var i = 0; i < 3; i++) {
@@ -81,7 +114,12 @@ function createDate(data, form) {
     newInput.step = '1';
     newInput.name = data.date[i+1].name;
     newInput.id = data.date[i+1].id;
-    newInput.required = 'required';
+    newInput.placeholder = data.date[i+1].placeholder;
+    if (data.date[i+1].hasOwnProperty('required')) {
+      newInput.required = 'required';
+    }
+    newInput.classList.add('page__input');
+    newInput.classList.add('page__data');
 
     inputContainer.appendChild(newInput);
   }
@@ -96,10 +134,13 @@ function createSelect(data, select, form) {
   var newSelect = document.createElement('select');
 
   inputContainer.classList.add('page__input-container');
+  inputContainer.classList.add('page__select-container');
   inputContainer.appendChild(createLabel(data, select[0].id, select[0].label));
 
   newSelect.name = select[0].name;
   newSelect.id = select[0].id;
+  newSelect.classList.add('page__input');
+  newSelect.classList.add('page__select');
 
   for (var value in select[1]) {
     var newOption = document.createElement('option');
@@ -125,7 +166,6 @@ function createForm(data) {
   container.appendChild(form);
 
   createInput(data, data.inputs, data.inputs.length, form);
-  createInput(data, data.previous_surname, data.previous_surname.length, form);
 
   createDate(data, form);
   createSelect(data, data.status_select, form);
@@ -135,30 +175,40 @@ function createForm(data) {
   var submit = document.createElement('button');
   submit.textContent = data.submit.text;
   submit.type = 'submit';
+  submit.classList.add('page__submit');
   form.appendChild(submit);
   addClasses();
 }
 
 // Добавляет классы со стилями
 function addClasses() {
-  var previousSurname = document.querySelector('.page__previous-surname');
-  var previousSurnameInput = document.querySelector('input[name=previous_surname]');
+  var previousSurname = document.querySelector('.page__previous-input');
+  var previousSurnameInput = previousSurname.querySelector('input');
   var previousCheckbox = document.querySelector('input[name=previous_checkbox]');
   var labels = document.querySelectorAll('label');
+  var checkboxContainers = document.querySelectorAll('.page__checkbox-container');
+  var checkboxes = document.querySelectorAll('.page__checkbox');
+  var agreementLabel = document.querySelector('label[for=agreement]');
+
+  agreementLabel.classList.add('page__agreement-label');
 
 // Открывает и прячет поле для прошлой фамилии
   previousSurname.classList.add('visually-hidden');
   previousSurnameInput.removeAttribute('required');
+  previousSurnameInput.disabled = true;
 
   previousCheckbox.addEventListener('change', function () {
     previousSurname.classList.toggle('visually-hidden');
     if (previousCheckbox.checked == false) {
       previousSurnameInput.removeAttribute('required');
+      previousSurnameInput.disabled = true;
+    } else {
+      previousSurnameInput.required = true;
+      previousSurnameInput.disabled = false;
     }
   });
 
   for (var i = 0; i < labels.length; i++) {
     labels[i].classList.add('page__label');
   }
-
 }
