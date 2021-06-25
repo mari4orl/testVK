@@ -144,5 +144,12 @@
     "id": "previous_checkbox",
     "name": "previous_checkbox"
     }
+  ],
+  "textarea": [
+    {
+    "label": "О себе",
+    "id": "info",
+    "name": "info"
+    }
   ]
 }

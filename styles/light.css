@@ -1,0 +1,68 @@
+body {
+  background-color: #ebedf0;
+}
+
+.page__form {
+  background-color: #ffffff;
+  box-shadow: inset 0 0 0 1px #e1e3e6;
+}
+
+.page__theme-button {
+  background-image: url("../img/moon-dark.svg");
+}
+
+.page__label {
+  color: #818c99;
+}
+
+.page__input {
+  background: #f2f3f5;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+
+  color: #000000;
+}
+
+.page__input:hover {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+
+.page__input:focus {
+  border-color: rgb(63, 138, 224);
+}
+
+.page__checkbox-indicator {
+  border: 2px solid #dbe0e5;
+}
+
+.page__checkbox:disabled + .page__checkbox-indicator {
+  border: 2px solid #c8c8c8;
+}
+
+.page__checkbox:focus + .page__checkbox-indicator {
+  border-color: rgb(70, 129, 196);
+}
+
+.page__label:hover .page__checkbox-indicator {
+  border-color: rgb(70, 129, 196);
+}
+
+.page__label:active .page__checkbox-indicator {
+  border-color: rgb(70, 129, 196);
+}
+
+.page__agreement-label {
+  color: #000000;
+}
+
+.page__submit {
+  background-color: #4986cc;
+  color: #ffffff;
+}
+
+.page__submit:hover {
+  background-color: rgb(70, 129, 196);
+}
+
+.page__submit:focus {
+  background-color: rgb(66, 121, 184);
+}
