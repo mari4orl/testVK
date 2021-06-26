@@ -64,14 +64,13 @@ function createInput(data, input, number, form) {
       newInput.required = 'required';
     }
 
-    // Валидация телефона
+
+    // Атрибуты для телефона
     if (input[i].type === 'tel') {
-      // newInput.pattern = '/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/gm';
-      // newInput.pattern = '\+?[0-9\-\(\)]+';
       newInput.setAttribute('minlength', '10');
       newInput.setAttribute('maxlength', '18');
       newInput.setAttribute('data-rules', 'tel');
-      newInput.addEventListener('input', validatePhone);
+      inputContainer.classList.add('page__tel-container');
     }
 
     newInput.classList.add('page__input');
@@ -203,7 +202,6 @@ function createTextarea(data, area, number, form) {
   form.appendChild(areaContainer);
 }
 
-
 /**
  * Генератор формы и её содержимого.
  * @function
@@ -247,52 +245,75 @@ function createForm(data) {
 
   btnTheme.addEventListener("click", function () { ChangeTheme(themeStyle); });
 
+  var input = document.querySelector('input[data-rules]');
+  
+  //Обработчик при выходе из поля ввода телефона
+  input.addEventListener ('blur', function() {
+    var telContainer = document.querySelector('.page__tel-container');
+    var input = document.querySelector('input[data-rules]');
 
-    // var input = document.querySelector('input[data-rules]');
-    //
-    // for (let input of inputs) {
-    //   // input.addEventListener ('blur', function() {
-    //     form.addEventListener('submit', function(evt) {
-    //        evt.preventDefault();
-    //       let rules = input.dataset.rules;
-    //       let value = input.value;
-    //       let check;
-    //       switch (rules) {
-    //         case 'tel':
-    //           check = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/.test(value);
-    //           break;
-    //       }
-    //
-    //       console.log('value = '+value);
-    //       console.log('check = '+ check);
-    //
-    //
-    //       if (check) {
-    //        input.classList.remove('invalid');
-    //        input.classList.add('valid');
-    //        evt.submit();
-    //       }
-    //        else {
-    //        input.classList.remove('valid');
-    //        input.classList.add('invalid');
-    //        input.setCustomValidity('Пожалуйста, введите номер в указанном формате');
-    //      }
-    //    }, false);
-    //   // })
-    // }
+    if (!validatePhone(input.value)){
+      addInvalid(input, telContainer);
+    } else {
+      addValid(input);
+    }
+  });
 
+  // Обработчик при отправке формы
+  form.addEventListener('submit', function(evt) {
+    evt.preventDefault();
+    var telContainer = document.querySelector('.page__tel-container');
+    var input = document.querySelector('input[data-rules]');
 
-    // validation();
+    if (!validatePhone(input.value)){
+      addInvalid(input);
+    } else {
+      addValid(input);
+      form.submit();
+    }
+  });
 }
 
-const re = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/gm;
-function validatePhone(phoneInput) {
-  console.log(phoneInput);
-  var OK = phoneInput.target.value.match(re);
-  if (!OK)
-  console.log(RegExp.input + " isn't a phone number with area code!");
-  else
-  console.log("Thanks, your phone number is " + OK[0]);
+const errorMessageHTML = '<p class="error-message">Пожалуйста, введите номер в указанном формате</p>';
+const regex = /^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/;
+
+/**
+ * Добавляет стилизацию при валидном номере.
+ * @function
+ * @param {object} input - Поле, которое валидируем.
+ */
+function addValid(input) {
+  input.classList.remove('invalid');
+  input.classList.add('valid');
+  var errorMessage = document.querySelector('.error-message');
+  if (errorMessage) {
+    errorMessage.parentNode.removeChild(errorMessage);
+  }
+}
+
+/**
+ * Добавляет стилизацию при невалидном номере.
+ * @function
+ * @param {object} input - Поле, которое валидируем.
+ * @param {object} telContainer - Контейнер, куда помещаем сообщение об ошибке.
+ */
+function addInvalid(input, telContainer) {
+  input.classList.remove('valid');
+  input.classList.add('invalid');
+  var errorMessage = document.querySelector('.error-message');
+  if (!errorMessage) {
+    telContainer.insertAdjacentHTML('afterend', errorMessageHTML);
+  }
+}
+
+/**
+ * Проверяет валидность номера телефона.
+ * @function
+ * @param {string|number} phone - Номер, который порверяем.
+ * @return {boolean} результат проверки.
+ */
+function validatePhone(phone){
+  return regex.test(phone);
 }
 
 /**
@@ -315,16 +336,13 @@ function addClasses() {
 
 // Открывает и прячет поле для прошлой фамилии
   previousSurname.classList.add('visually-hidden');
-  previousSurnameInput.removeAttribute('required');
   previousSurnameInput.disabled = true;
 
   previousCheckbox.addEventListener('change', function () {
     previousSurname.classList.toggle('visually-hidden');
     if (previousCheckbox.checked === false) {
-      previousSurnameInput.removeAttribute('required');
       previousSurnameInput.disabled = true;
     } else {
-      previousSurnameInput.required = true;
       previousSurnameInput.disabled = false;
     }
   });
@@ -340,23 +358,22 @@ function addClasses() {
  * @param {object} link - элемент HTML подключающий стили.
  */
 function ChangeTheme(link) {
-  console.log(typeof link);
-    let lightTheme = "styles/light.css";
-    let darkTheme = "styles/dark.css";
+  let lightTheme = "styles/light.css";
+  let darkTheme = "styles/dark.css";
 
-    var currTheme = link.getAttribute("href");
-    var theme = "";
+  var currTheme = link.getAttribute("href");
+  var theme = "";
 
-    if(currTheme == lightTheme)
-    {
-   	 currTheme = darkTheme;
-   	 theme = "dark";
-    }
-    else
-    {
-   	 currTheme = lightTheme;
-   	 theme = "light";
-    }
+  if(currTheme == lightTheme)
+  {
+ 	 currTheme = darkTheme;
+ 	 theme = "dark";
+  }
+  else
+  {
+ 	 currTheme = lightTheme;
+ 	 theme = "light";
+  }
 
-    link.setAttribute("href", currTheme);
+  link.setAttribute("href", currTheme);
 }

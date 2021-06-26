@@ -66,3 +66,11 @@ body {
 .page__submit:focus {
   background-color: rgb(66, 121, 184);
 }
+
+.valid {
+ border: 1px solid #20d451;
+}
+
+.invalid {
+ border: 1px solid #ff5c5c;
+}

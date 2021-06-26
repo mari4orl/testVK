@@ -74,3 +74,12 @@ body {
 .page__submit:focus {
   background-color: #b5b8bd;
 }
+
+
+.valid {
+ border: 1px solid #20d451;
+}
+
+.invalid {
+ border: 1px solid #ff5c5c;
+}

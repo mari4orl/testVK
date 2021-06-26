@@ -155,6 +155,13 @@ body {
   border-radius: 8px;
 }
 
+.error-message {
+ font-size: 14px;
+ margin-left: 200px;
+ margin-top: 0;
+ color: #ff5c5c;
+}
+
 .visually-hidden {
   position: absolute;
 
