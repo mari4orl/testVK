@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * Получает данные из data.json.
+ * @function
+ */
 export function generator() {
   fetch('data.json')
   .then((response) => {
@@ -135,7 +139,6 @@ function createDate(data, form) {
   form.appendChild(fragment);
 }
 
-
 /**
  * Генератор селектов.
  * @function
@@ -246,7 +249,7 @@ function createForm(data) {
   btnTheme.addEventListener("click", function () { ChangeTheme(themeStyle); });
 
   var input = document.querySelector('input[data-rules]');
-  
+
   //Обработчик при выходе из поля ввода телефона
   input.addEventListener ('blur', function() {
     var telContainer = document.querySelector('.page__tel-container');
